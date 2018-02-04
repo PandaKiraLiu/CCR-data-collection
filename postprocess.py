@@ -28,24 +28,24 @@ if __name__=="__main__":
     jointName = sys.argv[2]
     saveName = sys.argv[3]
     imageBag = rosbag.Bag(imageName)
-    jointBag = rosbag.Bat(jointName)
+    jointBag = rosbag.Bag(jointName)
     bridge = CvBridge()
     cur = 0
     joints = []
     data = []
-    for topic,msg,t in bag.read_messages(topics=['robot/joint_states']):
+    for topic,msg,t in jointBag.read_messages(topics=['/robot/joint_states']):
          sectime = msg.header.stamp.secs
-         if sectime > cur
+         if sectime > cur:
             cur = sectime
             joints.append([msg])
          else:
              joints[-1].append(msg)
     firstT = joints[0][0].header.stamp.secs
-    for topic, msg, t in bag.read_messages(topics=['image_raw']):
+    for topic, msg, t in imageBag.read_messages(topics=['image_raw']):
         time = msg.header.stamp.secs
         ind = time-firstT
         if ind>=0:            
             data.append(interpolate(msg,joints,ind))
-    np.savez_compressed(data,d=data)
+    np.savez_compressed(saveName,d=data)
     imageBag.close()
     jointBag.close()
