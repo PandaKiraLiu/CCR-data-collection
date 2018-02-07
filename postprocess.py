@@ -21,7 +21,7 @@ def interpolate(msg,joints,ind):
             mingap = gap
             argmin = j
     img =  bridge.imgmsg_to_cv2(msg,"bgr8")
-    return [img,argmin.position,argmin.velocity,argmin.effort]
+    return [img,argmin.position,argmin.velocity,argmin.effort,nsec]
 
 if __name__=="__main__":
     imageName = sys.argv[1]
